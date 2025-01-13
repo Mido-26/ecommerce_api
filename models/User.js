@@ -25,10 +25,4 @@ const User = sequelize.define('users', {
   timestamps: true, // Automatically adds createdAt and updatedAt fields
 });
 
-(async () => {
-  await sequelize.sync({ force: false , logging: console.log, alter: true}); // Syncs the model with the database
-
-  console.log('User table created or updated!');
-})();
-
 module.exports = User;

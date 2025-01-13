@@ -2,12 +2,14 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const multer = require('multer');
 const cors = require('cors');
+const sequelize = require('./config/db')
 
 // Routes
 const userRoutes = require('./routes/auth');
 const productRoutes = require('./routes/products');
 const categoryRoutes = require('./routes/categories');
 const sessionRoutes = require('./routes/sessions');
+const reviewsRoutes = require('./routes/reviews')
 
 // Load environment variables
 const dotenv = require('dotenv');
@@ -49,7 +51,16 @@ app.use('/api/users', userRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/categories', categoryRoutes); 
 app.use('/api/', sessionRoutes);
+app.use('/api/reviews', reviewsRoutes)
 
-app.listen(port, () => {
-  console.log(`Server running on port ${port}`);
-});
+sequelize.sync({force: true}).then( result => {
+  // console.log(result);
+  app.listen(port, () => {
+    console.log(`Server running on port ${port}`);
+  });
+}).catch(erro => { 
+  console.log("Error:" + erro)
+})
+// app.listen(port, () => {
+//   console.log(`Server running on port ${port}`);
+// });

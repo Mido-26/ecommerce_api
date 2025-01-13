@@ -2,16 +2,18 @@ const product = require('../models/Product');
 
 // add product
 const addProduct = async (req, res) => {
-    const { name, image_url, selling_price, buying_price, category_id } = req.body;
+    const image_url = req.file ? req.file.filename : null;;
+    console.log(image_url)
+    const { name,  selling_price, buying_price, cartegory_id } = req.body;
     try {
-        const product = await product.create({
+        const products = await product.create({
             name,
             image_url,
             selling_price,
             buying_price,
-            category_id
+            cartegory_id
         });
-        res.status(200).json({data: product, message: 'Product added successfully'});
+        res.status(200).json({data: products, message: 'Product added successfully'});
     } catch (error) {
         res.status(500).json({ error: error.message });
     } 
@@ -31,9 +33,9 @@ const getProducts = async (req, res) => {
 const getProductById = async (req, res) => {
     const id = req.params.id;
     try {
-        const product = await product.findByPk(id);
-        if (product) {
-            res.status(200).json({data: product, message: 'Product retrieved successfully'});
+        const products = await product.findByPk(id);
+        if (products) {
+            res.status(200).json({data: products, message: 'Product retrieved successfully'});
         } else {
             res.status(404).json({ message: 'Product not found' });
         }
@@ -47,7 +49,7 @@ const updateProduct = async (req, res) => {
     const id = req.params.id;
     const { name, image_url, selling_price, buying_price, category_id } = req.body;
     try {
-        const product = await product.update({
+        const products = await product.update({
             name,
             image_url,
             selling_price,
@@ -58,27 +60,31 @@ const updateProduct = async (req, res) => {
                 id
             }
         });
-        res.status(200).json({data: product, message: 'Product updated successfully'});
+        res.status(200).json({data: products, message: 'Product updated successfully'});
     } catch (error) {
         res.status(500).json({ error: error.message });
     }
 }
 
+
 // delete product by id
 const deleteProduct = async (req, res) => {
     const id = req.params.id;
    try {
-    const product = await product.destroy({
+    const products = await product.destroy({
         where: {
             id
         }
     });
-    res.status(200).json({data: product, message: 'Product deleted successfully'});
+    res.status(200).json({data: products, message: 'Product deleted successfully'});
    } catch (error) {
     res.status(500).json({ error: error.message });
    }
 }
 
+const getReviews = async (req, res) => {
+    let id = req.params.id;
+}
 // export controllers
 module.exports = {
     addProduct,

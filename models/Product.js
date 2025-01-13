@@ -19,10 +19,6 @@ const Products = sequelize.define('Products', {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    cartegory_id: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
     status: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -32,12 +28,8 @@ const Products = sequelize.define('Products', {
     timestamps: true, // Automatically adds createdAt and updatedAt fields
 });
 
-Products.belongsTo(cartegory, { foreignKey: 'category_id' });
-cartegory.hasMany(Products, { foreignKey: 'category_id' });
+Products.belongsTo(cartegory);
+cartegory.hasMany(Products);
 
-(async () => {
-    await sequelize.sync({ force: false }); // Syncs the model with the database
-    console.log('Products table created or updated!');
-  })();
 
 module.exports = Products;
