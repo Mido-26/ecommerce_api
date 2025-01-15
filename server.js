@@ -53,11 +53,11 @@ app.use('/api/categories', categoryRoutes);
 app.use('/api/', sessionRoutes);
 app.use('/api/reviews', reviewsRoutes)
 
-sequelize.sync({force: true}).then( result => {
+sequelize.sync({}).then( result => {
   // console.log(result);
   app.listen(port, () => {
     console.log(`Server running on port ${port}`);
-  });
+  }); 
 }).catch(erro => { 
   console.log("Error:" + erro)
 })
