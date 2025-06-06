@@ -22,6 +22,12 @@ const User = sequelize.define('users', {
     allowNull: false,
   },
 }, {
+  defaultScope: {
+    attributes: { exclude: ['password'] }, // Exclude password from default queries
+  },
+  scopes: {
+    withPassword: { attributes: {} }, // Include all attributes, including password  },
+  },
   timestamps: true, // Automatically adds createdAt and updatedAt fields
 });
 

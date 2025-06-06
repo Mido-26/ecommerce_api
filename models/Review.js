@@ -6,7 +6,7 @@ const Product = require('./Product')
 const Reviews = sequelize.define("Review", {
     rating: { type: DataTypes.INTEGER, allowNull: false },
     comment: { type: DataTypes.TEXT },
-  });
+});
   
   User.hasMany(Reviews);
   Reviews.belongsTo(User);
